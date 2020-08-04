@@ -1,5 +1,4 @@
 from rest_framework import serializers
-
 from .models import Position, Order, Bill
 
 
@@ -19,9 +18,9 @@ class BillSerializers(serializers.ModelSerializer):
         model = Bill
         fields = (
             'id',
-            'total_price',
             'description',
-            'active'
+            'active',
+            'total_price'
         )
 
 
