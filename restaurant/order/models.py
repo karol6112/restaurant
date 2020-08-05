@@ -5,7 +5,7 @@ from django.db import models
 
 
 class Position(models.Model):
-    name = models.CharField(max_length=100, blank=False)
+    name = models.CharField(max_length=100, blank=False, unique=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
 
     description = models.TextField(blank=True)
@@ -29,6 +29,15 @@ class Bill(models.Model):
             price = order.position.price
             total_price += amount * price
         return total_price
+
+    def orders(self):
+        order_list = {}
+        orders = self.order_bill.all()
+        for order in orders:
+            name = order.position.name
+            amount = order.amount
+            order_list[name] = amount
+        return order_list
 
 
 class Order(models.Model):

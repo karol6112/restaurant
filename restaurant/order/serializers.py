@@ -20,7 +20,8 @@ class BillSerializers(serializers.ModelSerializer):
             'id',
             'description',
             'active',
-            'total_price'
+            'total_price',
+            'orders'
         )
 
 
