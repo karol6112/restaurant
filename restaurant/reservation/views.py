@@ -1,3 +1,5 @@
+
+
 import smtplib
 from django.shortcuts import render
 from django_filters.rest_framework import DjangoFilterBackend
@@ -17,6 +19,8 @@ class ReservationViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, ]
     filterset_fields = ['date', 'number_of_guests', 'confirmed']
 
+
+
     @action(detail=True)
     def confirm(self, request, **kwargs):
         reservation = self.get_object()
@@ -30,6 +34,8 @@ class ReservationViewSet(viewsets.ModelViewSet):
 
         serializer = ReservationSerializers(reservation)
         return Response(serializer.data)
+
+
 
     @action(detail=True)
     def cancel(self, request, **kwargs):
@@ -58,10 +64,7 @@ class ReservationViewSet(viewsets.ModelViewSet):
             Duration:   {reservation.duration}
             Number of guests: {reservation.number_of_guests}                    
             """
-        if reservation.confirmed:
-            text = confirm_text
-        else:
-            text = cancel_text
+        text = confirm_text if reservation.confirmed else cancel_text
 
         try:
             server = smtplib.SMTP('smtp.gmail.com:587')
